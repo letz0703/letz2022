@@ -9,19 +9,19 @@ import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm'
 import Rank from './components/Rank/Rank'
 
 function App() {
-  const particlesInit = useCallback(main => {
-    loadFull(main)
-  }, [])
+    const particlesInit = useCallback(main => {
+        loadFull(main);
+    }, [])
 
-  return (
-    <div className="App">
-      <Particles options={particlesOptions} init={particlesInit} className='particles' />
-      <Navigation />
-      <Logo />
-      <Rank />
-      <ImageLinkForm />
-    </div >
-  );
+    return (
+        <div className="App">
+            <Particles options={particlesOptions} init={particlesInit} />
+            <Navigation />
+            <Logo />
+            <Rank />
+            <ImageLinkForm />import logo from './logo.svg';
+        </div>
+    );
 }
 
 export default App;
