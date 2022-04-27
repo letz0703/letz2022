@@ -1,4 +1,3 @@
-import React, { useCallback } from 'react';
 import Particles from "react-tsparticles";
 import { loadFull } from "tsparticles";
 import './App.css';
@@ -8,10 +7,10 @@ import Logo from './components/Logo/Logo'
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm'
 import Rank from './components/Rank/Rank'
 
-function App() {
-  const particlesInit = useCallback(main => {
-    loadFull(main)
-  }, [])
+const App = () => {
+  const particlesInit = async (main) => {
+    await loadFull(main)
+  };
 
   return (
     <div className="App">
