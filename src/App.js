@@ -9,6 +9,11 @@ import Navigation from './components/Navigation/Navigation'
 import Logo from './components/Logo/Logo'
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm'
 import Rank from './components/Rank/Rank'
+import FaceRecognition from './components/FaceRecognition/FaceRecognition'
+
+const app = new Clarifai.App({
+  apiKey: '6383ac6b7c8640318023b1a415579848'
+})
 
 // todo check clarify id
 console.log(Clarifai)
@@ -24,29 +29,26 @@ class App extends React.Component {
   constructor() {
     super()
     this.state = {
-      input: ''
+      input: '',
+      imgUrl: ''
     }
   }
 
   onInputChange = (event) => {
-    console.log(event.target.value)
+    this.setState({ input: event.target.value })
   }
 
   onButtonSubmit = () => {
-    const app = new Clarifai.App({
-      apiKey: '6383ac6b7c8640318023b1a415579848'
-    })
-    this.setState({ imageUrl: this.state.input })
-    console.log("click");
+
+    this.setState({ imgUrl: this.state.input })
     app.models
       .predict(
-        //     // Clarifai.FACE_DETECT_MODEL,
-        //     // replace above w/ below id of clarify
         "a403429f2ddf4b49b307e318f00e528b",
-        // this.state.input
-        "https://i.insider.com/5d321d4ea209d3146d650b4a?width=1100&format=jpeg&auto=webp"
+        // Clarifai.COLOR_MODEL,
+        // https://s3.amazonaws.com/arc-wordpress-client-uploads/infobae-wp/wp-content/uploads/2017/11/03145751/GENTE-Jenner-03111708.jpg
+        this.state.input
       )
-      .then(response => console.log('hi', response))
+      .then(response => console.log('hi', response.outputs[0].data.regions[0].region_info.bounding_box))
       .catch((error) => {
         console.log(error)
       });
@@ -59,7 +61,10 @@ class App extends React.Component {
         <Navigation />
         <Logo />
         <Rank />
-        <ImageLinkForm onInputChange={this.onInputChange} onButtonSubmit={this.onButtonSubmit} />
+        <ImageLinkForm
+          onInputChange={this.onInputChange}
+          onButtonSubmit={this.onButtonSubmit} />
+        <FaceRecognition imgUrl={this.state.imgUrl} />
       </div >
     );
   }
