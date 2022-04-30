@@ -4,7 +4,6 @@ import { loadFull } from "tsparticles";
 import './App.css';
 import particlesOptions from "./particles.json";
 import Clarifai from 'clarifai'
-// import FaceRecognition from './components/FaceRecognition/FaceRecognition'
 import Navigation from './components/Navigation/Navigation'
 import Logo from './components/Logo/Logo'
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm'
@@ -15,7 +14,6 @@ const app = new Clarifai.App({
   apiKey: '6383ac6b7c8640318023b1a415579848'
 })
 
-// todo check clarify id
 console.log(Clarifai)
 // const app = new Clarifai.App({
 //   apiKey: '6383ac6b7c8640318023b1a415579848'
@@ -30,8 +28,27 @@ class App extends React.Component {
     super()
     this.state = {
       input: '',
-      imgUrl: ''
+      imgUrl: '',
+      box: {}
     }
+  }
+
+  calculateFaceLocation = (data) => {
+    const clarifaiFace = data.outputs[0].data.regions[0].region_info.bounding_box
+    const image = document.getElementById('inputImage')
+    const width = Number(image.width)
+    const height = Number(image.height)
+    return {
+      leftCol: clarifaiFace.left_col * width,
+      topRow: clarifaiFace.top_row * height,
+      rightCol: width - (clarifaiFace.right_col * width),
+      bottomRow: height - (clarifaiFace.bottom_row * height)
+    }
+  }
+
+  displayFaceBox = (box) => {
+    // console.log(box) to FaceRecognition
+    this.setState({ box: box })
   }
 
   onInputChange = (event) => {
@@ -44,11 +61,10 @@ class App extends React.Component {
     app.models
       .predict(
         "a403429f2ddf4b49b307e318f00e528b",
-        // Clarifai.COLOR_MODEL,
         // https://s3.amazonaws.com/arc-wordpress-client-uploads/infobae-wp/wp-content/uploads/2017/11/03145751/GENTE-Jenner-03111708.jpg
         this.state.input
       )
-      .then(response => console.log('hi', response.outputs[0].data.regions[0].region_info.bounding_box))
+      .then(response => { this.displayFaceBox(this.calculateFaceLocation(response)) })
       .catch((error) => {
         console.log(error)
       });
@@ -64,7 +80,7 @@ class App extends React.Component {
         <ImageLinkForm
           onInputChange={this.onInputChange}
           onButtonSubmit={this.onButtonSubmit} />
-        <FaceRecognition imgUrl={this.state.imgUrl} />
+        <FaceRecognition imgUrl={this.state.imgUrl} box={this.state.box} />
       </div >
     );
   }
