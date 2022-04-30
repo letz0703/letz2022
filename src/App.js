@@ -4,13 +4,16 @@ import { loadFull } from "tsparticles";
 import './App.css';
 import particlesOptions from "./particles.json";
 import Clarifai from 'clarifai'
-// import FaceRecognition from './components/FaceRecognition/FaceRecognition'
 import Navigation from './components/Navigation/Navigation'
 import Logo from './components/Logo/Logo'
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm'
 import Rank from './components/Rank/Rank'
+import FaceRecognition from './components/FaceRecognition/FaceRecognition'
 
-// todo check clarify id
+const app = new Clarifai.App({
+  apiKey: '6383ac6b7c8640318023b1a415579848'
+})
+
 console.log(Clarifai)
 // const app = new Clarifai.App({
 //   apiKey: '6383ac6b7c8640318023b1a415579848'
@@ -24,29 +27,44 @@ class App extends React.Component {
   constructor() {
     super()
     this.state = {
-      input: ''
+      input: '',
+      imgUrl: '',
+      box: {}
     }
   }
 
+  calculateFaceLocation = (data) => {
+    const clarifaiFace = data.outputs[0].data.regions[0].region_info.bounding_box
+    const image = document.getElementById('inputImage')
+    const width = Number(image.width)
+    const height = Number(image.height)
+    return {
+      leftCol: clarifaiFace.left_col * width,
+      topRow: clarifaiFace.top_row * height,
+      rightCol: width - (clarifaiFace.right_col * width),
+      bottomRow: height - (clarifaiFace.bottom_row * height)
+    }
+  }
+
+  displayFaceBox = (box) => {
+    // console.log(box) to FaceRecognition
+    this.setState({ box: box })
+  }
+
   onInputChange = (event) => {
-    console.log(event.target.value)
+    this.setState({ input: event.target.value })
   }
 
   onButtonSubmit = () => {
-    const app = new Clarifai.App({
-      apiKey: '6383ac6b7c8640318023b1a415579848'
-    })
-    this.setState({ imageUrl: this.state.input })
-    console.log("click");
+
+    this.setState({ imgUrl: this.state.input })
     app.models
       .predict(
-        //     // Clarifai.FACE_DETECT_MODEL,
-        //     // replace above w/ below id of clarify
         "a403429f2ddf4b49b307e318f00e528b",
-        // this.state.input
-        "https://i.insider.com/5d321d4ea209d3146d650b4a?width=1100&format=jpeg&auto=webp"
+        // https://s3.amazonaws.com/arc-wordpress-client-uploads/infobae-wp/wp-content/uploads/2017/11/03145751/GENTE-Jenner-03111708.jpg
+        this.state.input
       )
-      .then(response => console.log('hi', response))
+      .then(response => { this.displayFaceBox(this.calculateFaceLocation(response)) })
       .catch((error) => {
         console.log(error)
       });
@@ -59,7 +77,10 @@ class App extends React.Component {
         <Navigation />
         <Logo />
         <Rank />
-        <ImageLinkForm onInputChange={this.onInputChange} onButtonSubmit={this.onButtonSubmit} />
+        <ImageLinkForm
+          onInputChange={this.onInputChange}
+          onButtonSubmit={this.onButtonSubmit} />
+        <FaceRecognition imgUrl={this.state.imgUrl} box={this.state.box} />
       </div >
     );
   }
