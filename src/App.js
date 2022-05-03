@@ -10,6 +10,7 @@ import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm'
 import Rank from './components/Rank/Rank'
 import FaceRecognition from './components/FaceRecognition/FaceRecognition'
 import SignIn from './components/SignIn/SignIn'
+import Register from './components/Register/Register'
 
 const app = new Clarifai.App({
   apiKey: '6383ac6b7c8640318023b1a415579848'
@@ -72,18 +73,17 @@ class App extends React.Component {
       });
   }
 
-  onRouteChange = () => {
-    this.setState({ route: 'home' })
+  onRouteChange = (route) => {
+    this.setState({ route: route })
   }
 
   render() {
     return (
       <div className="App">
         <Particles options={particlesOptions} init={particlesInit} className='particles' />
-        <Navigation />
-        {this.state.route === 'signIn'
-          ? <SignIn onRouteChange={this.onRouteChange} />
-          : <div>
+        <Navigation onRouteChange={this.onRouteChange} />
+        {this.state.route === 'home'
+          ? <div>
             <Logo />
             <Rank />
             <ImageLinkForm
@@ -92,6 +92,11 @@ class App extends React.Component {
             />
             <FaceRecognition imgUrl={this.state.imgUrl} box={this.state.box} />
           </div>
+          :
+          this.state.route !== 'signIn'
+            ? <Register onRouteChange={this.onRouteChange} />
+            : <SignIn onRouteChange={this.onRouteChange} />
+
         }
       </div >
     );
