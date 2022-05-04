@@ -4,7 +4,7 @@ import { loadFull } from "tsparticles";
 import './App.css';
 import particlesOptions from "./particles.json";
 import Clarifai from 'clarifai'
-import Navigation from './components/Navigation/Navigation'
+import Navigation from './components/Navigation/navigation'
 import Logo from './components/Logo/Logo'
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm'
 import Rank from './components/Rank/Rank'
@@ -81,7 +81,7 @@ class App extends React.Component {
     return (
       <div className="App">
         <Particles options={particlesOptions} init={particlesInit} className='particles' />
-        <Navigation onRouteChange={this.onRouteChange} />
+        <Navigation onRouteChange={this.onRouteChange} state={this.state.route} />
         {this.state.route === 'home'
           ? <div>
             <Logo />
@@ -96,7 +96,6 @@ class App extends React.Component {
           this.state.route !== 'signIn'
             ? <Register onRouteChange={this.onRouteChange} />
             : <SignIn onRouteChange={this.onRouteChange} />
-
         }
       </div >
     );
