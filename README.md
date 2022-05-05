@@ -24,7 +24,7 @@ Links
 click [here](http://apple.com) ← click \[here]\(link)
 
 Images:
-![description](https://www.apple.com/newsroom/images/product/os/macos/standard/Apple-macOS-Mojave-iMac-Pro-dark-mode-screen-09242018_big.jpg.large.jpg){:height="30%" width-"30%"} ← !\[description](image url){
+![description](https://www.apple.com/newsroom/images/product/os/macos/standard/Apple-macOS-Mojave-iMac-Pro-dark-mode-screen-09242018_big.jpg.large.jpg){:height="30%" width="30%"} ← !\[description](image url){
 :height="30%" width="30%"
 }
 
