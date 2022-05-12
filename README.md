@@ -23,3 +23,5 @@ t
 yarn global add gh-pages --save-dev
 
 ✭ yarn run deploy
+
+0512목 testing
