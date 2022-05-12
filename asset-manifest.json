@@ -1,0 +1,27 @@
+{
+  "files": {
+    "main.css": "/letz/static/css/main.4e2abef4.chunk.css",
+    "main.js": "/letz/static/js/main.cb11538f.chunk.js",
+    "main.js.map": "/letz/static/js/main.cb11538f.chunk.js.map",
+    "runtime-main.js": "/letz/static/js/runtime-main.a76e79a2.js",
+    "runtime-main.js.map": "/letz/static/js/runtime-main.a76e79a2.js.map",
+    "static/css/2.6d7c7915.chunk.css": "/letz/static/css/2.6d7c7915.chunk.css",
+    "static/js/2.9fb904de.chunk.js": "/letz/static/js/2.9fb904de.chunk.js",
+    "static/js/2.9fb904de.chunk.js.map": "/letz/static/js/2.9fb904de.chunk.js.map",
+    "static/js/3.c00f5ed4.chunk.js": "/letz/static/js/3.c00f5ed4.chunk.js",
+    "static/js/3.c00f5ed4.chunk.js.map": "/letz/static/js/3.c00f5ed4.chunk.js.map",
+    "static/js/4.65acbf13.chunk.js": "/letz/static/js/4.65acbf13.chunk.js",
+    "static/js/4.65acbf13.chunk.js.map": "/letz/static/js/4.65acbf13.chunk.js.map",
+    "index.html": "/letz/index.html",
+    "static/css/2.6d7c7915.chunk.css.map": "/letz/static/css/2.6d7c7915.chunk.css.map",
+    "static/css/main.4e2abef4.chunk.css.map": "/letz/static/css/main.4e2abef4.chunk.css.map",
+    "static/js/2.9fb904de.chunk.js.LICENSE.txt": "/letz/static/js/2.9fb904de.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.a76e79a2.js",
+    "static/css/2.6d7c7915.chunk.css",
+    "static/js/2.9fb904de.chunk.js",
+    "static/css/main.4e2abef4.chunk.css",
+    "static/js/main.cb11538f.chunk.js"
+  ]
+}
